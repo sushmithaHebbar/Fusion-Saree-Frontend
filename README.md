@@ -1,4 +1,4 @@
-Saree Fusion Design Studio
+Saree Fusion
 
 Overview
 
