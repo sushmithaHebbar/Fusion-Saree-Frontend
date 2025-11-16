@@ -36,7 +36,7 @@ const Header = ({ startpage, togglemenu, isopenmenu, currentpage, theme, togglet
         {/* Left Section: Logo and Desktop Links */}
         <div className="d-flex align-items-center">
             {/* Logo */}
-            <svg xmlns="http://www.w3.org/2000/svg" className="me-2" style={{ width: 28, height: 28, color: 'var(--bs-primary)' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            {/* <svg xmlns="http://www.w3.org/2000/svg" className="me-2" style={{ width: 28, height: 28, color: 'var(--bs-primary)' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
                 <path d="M15 2H9"></path>
                 <path d="M12 2v2"></path>
@@ -44,8 +44,8 @@ const Header = ({ startpage, togglemenu, isopenmenu, currentpage, theme, togglet
                 <path d="M12 11l-3 3"></path>
                 <path d="M12 11l3 3"></path>
             </svg>
-            <span className="fs-4 fw-bold me-4" style={{ color: 'var(--bs-primary)' }}>Saree Fusion</span>
-
+            <span className="fs-4 fw-bold me-4" style={{ color: 'var(--bs-primary)' }}>Saree Fusion</span> */}
+          <img src="logo1.png" width={90} height={70} ></img>              
             {/* Desktop Navigation Links (Visible on large screens) */}
             <div className="d-none d-lg-flex align-items-center gap-4 ms-3">
                 <button 
@@ -113,9 +113,13 @@ const HeroSection = ({ startpage }) => (
             onError={(e) => { e.target.src = "https://placehold.co/1300x700/4B0082/FFFFFF?text=Handloom+Saree+Background"; }}
         />
         <div className="hero-overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center p-4">
-            <h1 className="hero-title fw-light text-white mb-3 text-uppercase">
-                Beautifully Crafted <br/> <span className="fw-bold">Handloom Saree</span>
+            <h1
+            className="hero-title text-white mb-3"
+            style={{ fontFamily: "'Italic', cursive", fontSize: "80px" }}
+                >
+    Saree Fusion
             </h1>
+
             <p className="text-white mb-4 small fw-medium">By Sarees Designer</p>
             <div className="d-flex flex-column flex-sm-row gap-3">
                 <button 
@@ -286,9 +290,8 @@ const HomeView = ({ startpage }) => (
                     <ArrowRightIcon className="ms-3" style={{ width: 24, height: 24 }} />
                 </button>
                 
-                <p className="text-center small px-2 fw-medium fw-bold" style={{ color: 'var(--text-secondary)' }}>
-                <h4>INHERIT TRADITION MEETS INNOVATION.</h4> 
-                    DESIGN YOUR DREAM SAREE WITH YOUR UNIQUE BLEND OF BODY, BORDER, AND PALLU.
+                <p className="text-center large px-10 fw-medium fw-bold" style={{ color: 'var(--text-secondary)' }}>
+                 where tradition meets innovation, design your dream saree with your unique blend of body, border, and pallu.
                 </p>
             </div>
         </div>
@@ -969,27 +972,33 @@ const App = () => {
             <style jsx="true">{`
                 /* --- THEME VARIABLES --- */
                 :root {
-                    --bs-primary: #FF5722; /* Primary Orange */
-                    --accent-red: #D32F2F; /* Deep Red for accents */
-                    --accent-orange: #FF9800; /* Lighter Orange */
-                    --accent-gold: #FFC107; /* Gold/Yellow for icons */
-                    --icon-color: var(--text-primary); /* Icons use primary text color by default */
+                --bs-primary: #8a4bff; /* Main Purple */
+                --accent-purple: #b07eff; /* Soft Lavender Accent */
+                --accent-blue: #6ea8ff; /* Light Blue Accent */
+                --accent-pink: #e879f9; /* Soft Pink Glow */
+                --icon-color: var(--text-primary);
 
-                    --bg-primary: white;
-                    --bg-input: #f8f9fa; /* Light grey input/secondary background */
-                    --text-primary: #333333; /* Darker text */
-                    --text-secondary: #6c757d;
-                    --shadow-color: rgba(255, 87, 34, 0.3); /* Orange shadow */
-                    --card-bg: white;
-                    --border-color: rgba(0, 0, 0, 0.1);
-                    --border-color-dashed: rgba(255, 87, 34, 0.4);
-                    
-                    /* Footer Colors (Light Mode) */
-                    --footer-bg: #f8f9fa; /* Light grey footer */
-                    --footer-text-color: #333333;
-                    --footer-link-color: #6c757d;
-                    --footer-sub-bg: #e9ecef; /* Even lighter strip */
-                }
+                --bg-primary:#C8A2C8; /* Light Lavender Background */
+                --bg-input: #f3f0ff; /* Very Light Lavender Background */
+                --text-primary: #2c2c54; /* Deep Indigo Text */
+                --text-secondary: #6c6f92; /* Soft Muted Indigo */
+                --shadow-color: rgba(138, 75, 255, 0.25); /* Purple Shadow */
+                --card-bg: #f3f0ff;
+
+                --border-color: rgba(138, 75, 255, 0.4); /* Purple Border */
+                --border-color-dashed: rgba(142, 75, 255, 0.35);
+
+                /* Gradient Backgrounds */
+                --gradient-primary:linear-gradient(135deg, #9ad5ff, #8a4fff);
+                --gradient-dark: linear-gradient(135deg, #7c3aed, #2563eb);
+
+                /* Footer Colors (Light Mode) */
+                --footer-bg: #f3f0ff; /* Soft Lavender Footer */
+                --footer-text-color: #2c2c54;
+                --footer-link-color: #6c6f92;
+                --footer-sub-bg: #e9e6ff; /* Even Lighter Lavender Strip */
+}
+
 
                 .dark-mode {
                     --bs-primary: #FF9800; /* Primary Orange/Amber */
