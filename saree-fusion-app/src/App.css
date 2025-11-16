@@ -1,42 +1,172 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+/* --- GLOBAL COLOR VARIABLES AND THEME DEFINITIONS --- */
+:root {
+      /* Color Palette (Based on provided image and purple theme) */
+      --bs-primary: #8a4bff; /* Main Purple */
+      --accent-purple: #b07eff; /* Soft Lavender Accent */
+      --accent-blue: #6ea8ff; /* Light Blue Accent */
+      --accent-pink: #e879f9; /* Soft Pink Glow */
+      --icon-color: var(--text-primary);
+  
+      --bg-primary:#b07eff; 
+      --bg-input: #8a4bff; 
+      --text-primary:#6ea8ff; 
+      --text-secondary:rgb(83, 52, 194);
+      --shadow-color: rgba(198, 75, 255, 0.76); 
+      --card-bg: #f3f0ff;
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+  
+      --border-color: rgba(138, 75, 255, 0.4);
+      --border-color-dashed: rgba(142, 75, 255, 0.35);
+  
+      /* Gradient for CTA/Footer */
+      --gradient-primary: linear-gradient(round, 515deg, rgb(114, 77, 182), rgb(122, 79, 207));
+      
+      /* Footer Colors (Light Mode) */
+      --footer-bg: #f3f0ff;
+      --footer-text-color: #2c2c54;
+      --footer-link-color: #6c6f92;
+      --footer-sub-bg: #e9e6ff;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .dark-mode {
+      /* Dark Mode Theme */
+      --bs-primary: #FF9800; /* Primary Orange/Amber */
+      --accent-red: #E91E63;
+      --accent-orange: #FF5722;  
+      --accent-gold: #FFC107;
+      --icon-color: var(--bs-primary);
+  
+      --bg-primary: #1c1c1c;
+      --bg-input: #333333;
+      --text-primary: white;
+      --text-secondary: #a0a0a0;
+      --shadow-color: rgba(255, 152, 0, 0.1);
+      --card-bg: #2d2d2d;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --border-color-dashed: rgba(255, 152, 0, 0.6); 
+  
+      /* Gradient for CTA/Footer */
+      --gradient-primary: linear-gradient(135deg, #7c3aed, #2563eb);
+  
+      /* Footer Colors (Dark Mode) */
+      --footer-bg: #111111;
+      --footer-text-color: #f8f9fa;
+      --footer-link-color: #a0a0a0;
+      --footer-sub-bg: #000000;
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  
+  /* --- BASE STYLES --- */
+  body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary); 
+      color: var(--text-primary); 
+      min-height: 100vh;
+      padding: 0;
+      margin: 0;
+      transition: background-color 0.3s;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
+  
+  .app-container {
+      width: 100%;
+      min-height: 100vh; 
+      max-width: 100%; 
+      display: flex;
+      flex-direction: column; 
+      overflow: auto; 
+      background-color: var(--bg-primary); 
+      margin: 0; 
+  }
+  
+  .text-primary {
+      color: var(--bs-primary) !important;
+  }
+  .fw-semibold {
+      font-weight: 600 !important;
+  }
+  .cursor-pointer {
+      cursor: pointer;
+  }
+  
+  /* Custom scrollbar for better aesthetics */
+  ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+      background-color: var(--bs-primary); 
+      border-radius: 4px;
+  }
+  ::-webkit-scrollbar-track {
+      background-color: transparent;
+  }
+  
+  
+  /* --- HEADER/NAVBAR STYLES (App.jsx) --- */
+  @media (min-width: 1200px) {
+      .align-desktop {
+          max-width: 100%; 
+          margin: 0 auto; 
+          width: 100% !important; 
+          padding: 0 20px;
+      }
+      .nav-link-desktop {
+          color: var(--text-secondary); 
+          background: none;
+          border: none;
+          font-weight: 500;
+          padding: 0.5rem 0.75rem;
+          transition: color 0.2s, background-color 0.2s;
+      }
+      .nav-link-desktop:hover {
+          color: var(--bs-primary);
+          background-color: rgba(255, 87, 34, 0.1); 
+      }
+      .nav-link-desktop.active-link {
+          color: var(--bs-primary);
+          font-weight: 700;
+          box-shadow: 0 1px 0 0 var(--bs-primary); 
+          border-radius: 0; 
+      }
+  }
+  @media (max-width: 1199px) {
+      .align-desktop {
+          padding: 0 15px; 
+      }
+  }
+  
+  /* Mobile Menu Overlay Styles */
+  .menu-overlay {
+      position: absolute; 
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--bg-primary); 
+      opacity: 0.98;
+      z-index: 2000;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+      padding-top: 70px; 
+  }
+  .menu-overlay.show {
+      display: block;
+      opacity: 1;
+  }
+  .menu-content {
+      position: relative; 
+      top: 0;
+      right: 0;
+      left: 0;
+      width: 100%;
+      transition: transform 0.3s, opacity 0.3s;
+      transform: translateY(0); 
+      opacity: 1;
+      box-shadow: 0 5px 15px var(--shadow-color) !important;
+      margin: 0 1.5rem; 
+  }
+  @media (min-width: 992px) {
+      .menu-overlay {
+          display: none !important;
+      }
+  }
