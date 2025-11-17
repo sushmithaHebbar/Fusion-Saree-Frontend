@@ -8,18 +8,53 @@ const CheckIcon = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" 
 const ArrowRightIcon = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="12 4 19 12 12 20"/><line x1="19" x2="5" y1="12" y2="12"/></svg>;
 
 
-const UploadArea = ({ title, placeholder, image, setter, clear, openModalCroped, isCropped }) => {
+const UploadArea = ({ title, placeholder, image, setter, clear, openModalCroped, isCropped  , part , setId}) => {
       const fileInputRef = useRef(null);
+      const handleFileUpload = async (file) => {
+            if (!file) return;
+            
+            //Dont Touch this 
+            const formData = new FormData();
+            formData.append('image', file);
+        
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/upload_${part}`, {
+                    method: 'POST',
+                    body: formData,
+                });
+        
+                const data = await response.json();
+                console.log('Response from server:', data.data);
+                set
+            const fetchImage = async (file_id , part ) => {
+                  const formData = new FormData();
+                  formData.append("file_id", file_id);
+              
+                  const response = await fetch(`http://127.0.0.1:5000/get_${part}`, {
+                      method: "POST",
+                      body: formData
+                  });
+              
+                  const data = await response.json();
+                  console.log("Backend Response:", data);
+              
+                  if (data.file) {
+                      const base64Image = `data:image/png;base64,${data.file}`;
+                      setter(base64Image); // Store the image in your state
+                  }
+              };
+                
+            fetchImage(data.data , part)
+            setId(data.data)
+            //Till here
 
-      const handleFileUpload = (file) => {
-            if (!file || !file.type.startsWith('image/')) return;
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                  setter(reader.result); // Stores base64 data URL
-            };
-            reader.readAsDataURL(file);
-      };
 
+            } catch (error) {
+                console.error("Upload failed:", error);
+                //Alert Give 
+            }
+        };
+        
       const handleDragOver = (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -247,7 +282,7 @@ const CropModal = ({ isOpen, imageType, imageSrc, close, saveCrop }) => {
 };
 
 
-export const UploadView = ({ startGeneration, palluImage, setPalluImage, bodyImage, setBodyImage, borderImage, setBorderImage, description, setDescription, croppedPallu, croppedBody, croppedBorder, isCropModalOpen, imageTypeToCrop, closeCropModal, openModalCroped, setCroppedPallu, setCroppedBody, setCroppedBorder }) => {
+export const UploadView = ({ startGeneration, palluImage, setPalluImage, bodyImage, setBodyImage, borderImage, setBorderImage, description, setDescription, croppedPallu, croppedBody, croppedBorder, isCropModalOpen, imageTypeToCrop, closeCropModal, openModalCroped, setCroppedPallu, setCroppedBody, setCroppedBorder , palluId , borderId,bodyId ,setBodyId ,setBorderId,setPalluId  }) => {
   
       const imageStateMap = {
             pallu: { image: palluImage, setter: setPalluImage, croppedSetter: setCroppedPallu, isCropped: !!croppedPallu },
@@ -284,6 +319,9 @@ export const UploadView = ({ startGeneration, palluImage, setPalluImage, bodyIma
                                           clear={() => clearImage('pallu')}
                                           openModalCroped={() => openModalCroped('pallu', palluImage)}
                                           isCropped={!!croppedPallu}
+                                          part='pallu'
+                                          setId = {setPalluId}
+
                                     />
                               </div>
 
@@ -296,6 +334,8 @@ export const UploadView = ({ startGeneration, palluImage, setPalluImage, bodyIma
                                           clear={() => clearImage('body')}
                                           openModalCroped={() => openModalCroped('body', bodyImage)}
                                           isCropped={!!croppedBody}
+                                          part='body'
+                                          setId = {setBodyId}
                                     />
                               </div>
                           
@@ -308,6 +348,8 @@ export const UploadView = ({ startGeneration, palluImage, setPalluImage, bodyIma
                                           clear={() => clearImage('border')}
                                           openModalCroped={() => openModalCroped('border', borderImage)}
                                           isCropped={!!croppedBorder}
+                                          part='border'
+                                          setId = {setBorderId}
                                     />
                               </div>
                         </div>

@@ -169,6 +169,13 @@ const App = () => {
     const [borderImage, setBorderImage] = useState(null);
     const [description, setDescription] = useState('');
 
+
+    //IMAGE ID STATES
+
+    const [palluId , setPalluId] = useState(null)
+    const [bodyId , setBodyId] = useState(null)
+    const [borderId  , setBorderId] = useState(null)
+
     // CROPPING/EDITED STATES (The result of the virtual crop)
     const [croppedPallu, setCroppedPallu] = useState(null);
     const [croppedBody, setCroppedBody] = useState(null);
@@ -209,7 +216,7 @@ const App = () => {
 
 
     const startGeneration = useCallback(async () => {
-        
+        console.log(palluId , borderId , bodyId)
         if ((!palluImage && !bodyImage && !borderImage) || description.trim().length < 1) {
             console.error("Please upload an image AND provide a description to generate the fusion.");
             return;
@@ -262,6 +269,12 @@ const App = () => {
                     croppedPallu={croppedPallu}
                     croppedBody={croppedBody}
                     croppedBorder={croppedBorder}
+                    palluId  ={palluId}
+                    borderId ={borderId}
+                    bodyId ={bodyId}
+                    setBodyId = {setBodyId}
+                    setBorderId = {setBorderId}
+                    setPalluId = {setPalluId}
                 />;
             case 'loading':
                 return <LoadingView />;
