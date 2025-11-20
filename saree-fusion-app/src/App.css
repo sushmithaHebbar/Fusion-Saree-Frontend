@@ -1,172 +1,591 @@
-/* --- GLOBAL COLOR VARIABLES AND THEME DEFINITIONS --- */
-:root {
-      /* Color Palette (Based on provided image and purple theme) */
-      --bs-primary: #8a4bff; /* Main Purple */
-      --accent-purple: #b07eff; /* Soft Lavender Accent */
-      --accent-blue: #6ea8ff; /* Light Blue Accent */
-      --accent-pink: #e879f9; /* Soft Pink Glow */
-      --icon-color: var(--text-primary);
+#root {
+ 
   
-      --bg-primary:#b07eff; 
-      --bg-input: #8a4bff; 
-      --text-primary:#6ea8ff; 
-      --text-secondary:rgb(83, 52, 194);
-      --shadow-color: rgba(198, 75, 255, 0.76); 
-      --card-bg: #f3f0ff;
+ 
+  text-align: center;
+}
 
-  
-      --border-color: rgba(138, 75, 255, 0.4);
-      --border-color-dashed: rgba(142, 75, 255, 0.35);
-  
-      /* Gradient for CTA/Footer */
-      --gradient-primary: linear-gradient(round, 515deg, rgb(114, 77, 182), rgb(122, 79, 207));
-      
-      /* Footer Colors (Light Mode) */
-      --footer-bg: #f3f0ff;
-      --footer-text-color: #2c2c54;
-      --footer-link-color: #6c6f92;
-      --footer-sub-bg: #e9e6ff;
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
   }
-  
-  .dark-mode {
-      /* Dark Mode Theme */
-      --bs-primary: #FF9800; /* Primary Orange/Amber */
-      --accent-red: #E91E63;
-      --accent-orange: #FF5722;  
-      --accent-gold: #FFC107;
-      --icon-color: var(--bs-primary);
-  
-      --bg-primary: #1c1c1c;
-      --bg-input: #333333;
-      --text-primary: white;
-      --text-secondary: #a0a0a0;
-      --shadow-color: rgba(255, 152, 0, 0.1);
-      --card-bg: #2d2d2d;
-      --border-color: rgba(255, 255, 255, 0.1);
-      --border-color-dashed: rgba(255, 152, 0, 0.6); 
-  
-      /* Gradient for CTA/Footer */
-      --gradient-primary: linear-gradient(135deg, #7c3aed, #2563eb);
-  
-      /* Footer Colors (Dark Mode) */
-      --footer-bg: #111111;
-      --footer-text-color: #f8f9fa;
-      --footer-link-color: #a0a0a0;
-      --footer-sub-bg: #000000;
+  to {
+    transform: rotate(360deg);
   }
-  
-  /* --- BASE STYLES --- */
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+
+/* In your CSS file (e.g., App.css, index.css, or a dedicated utility file) */
+
+.text-metallic-gold {
+  /* Fallback color for browsers that don't support text clipping */
+  color: #D4AF37; /* A solid gold fallback */
+
+  /* Gradient for metallic effect */
+  background: linear-gradient(to bottom, #FFD700, #DAA520, #B8860B); /* Light gold to darker gold */
+  -webkit-background-clip: text; /* Clip the background to the shape of the text */
+  background-clip: text;
+  -webkit-text-fill-color: transparent; /* Make the text itself transparent so the background shows through */
+  color: transparent; /* Standard property for transparency */
+
+  /* Optional: Add a subtle text shadow for more depth and glow */
+  text-shadow: 0px 0px 8px rgba(255, 215, 0, 0.5), /* Gold glow */
+               0px 1px 2px rgba(0, 0, 0, 0.8); /* Darker shadow for depth */
+}
+
+.custom-owl-wrapper img {
+  width: 100%;
+  height: 320px;        /* Adjust based on 1st image height */
+  object-fit: cover;    /* Crop nicely without stretching */
+  border-radius: 10px;  /* Optional – keeps rounded corners */
+}
+
+
+/* --- THEME VARIABLES --- */
+:root {
+  --bs-primary: #8a4bff; /* Main Purple */
+  --accent-purple: #b07eff; /* Soft Lavender Accent */
+  --accent-blue: #6ea8ff; /* Light Blue Accent */
+  --accent-pink: #e879f9; /* Soft Pink Glow */
+  --icon-color: var(--text-primary);
+
+  --bg-primary: rgb(25, 25, 70); /* Light Lavender Background */
+  --bg-input: #f3f0ff; /* Very Light Lavender Background */
+  --text-primary: #ffffff; /* Deep Indigo Text (Fixed typo from #fffff) */
+  --text-secondary: white; /* Soft Muted Indigo */
+  --shadow-color: rgba(138, 75, 255, 0.25); /* Purple Shadow */
+  --card-bg: #f3f0ff;
+
+  --border-color: rgba(138, 75, 255, 0.4); /* Purple Border */
+  --border-color-dashed: rgba(142, 75, 255, 0.35);
+
+  /* Gradient Backgrounds */
+  --gradient-primary: linear-gradient(135deg, #9ad5ff, #8a4fff);
+  --gradient-dark: linear-gradient(135deg, #7c3aed, #2563eb);
+
+  /* Footer Colors (Light Mode) */
+  --footer-bg: #f3f0ff; /* Soft Lavender Footer */
+  --footer-text-color: #2c2c54;
+  --footer-link-color: #6c6f92;
+  --footer-sub-bg: #e9e6ff; /* Even Lighter Lavender Strip */
+}
+
+.dark-mode {
+  --bs-primary: #FF9800; /* Primary Orange/Amber */
+  --accent-red: #E91E63;
+  --accent-orange: #FF5722;
+  --accent-gold: #FFC107;
+  --icon-color: var(--bs-primary); /* Icons use bright accent color in dark mode */
+
+  --bg-primary: #1c1c1c;
+  --bg-input: #333333;
+  --text-primary: white;
+  --text-secondary: #a0a0a0;
+  --shadow-color: rgba(255, 152, 0, 0.1); /* Amber shadow */
+  --card-bg: #2d2d2d;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-color-dashed: rgba(255, 152, 0, 0.6);
+
+  /* Footer Colors (Dark Mode) */
+  --footer-bg: #111111; /* Very dark footer */
+  --footer-text-color: #f8f9fa;
+  --footer-link-color: #a0a0a0;
+  --footer-sub-bg: #000000; /* Pure black strip */
+}
+
+/* Apply Inter font and the main background color */
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  transition: background-color 0.3s;
+}
+
+.hero-subtext {
+  font-family: 'Cormorant Garamond', serif;
+  color: #f5d88a;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  margin-top: 6px;
+}
+
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  background-color: var(--bg-primary);
+  margin: 0;
+}
+
+.navbar {
+  padding: 12px 40px;
+}
+
+/* Desktop/Laptop Styles: Make the app wide, tall, and centered */
+@media (min-width: 1200px) {
   body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg-primary); 
-      color: var(--text-primary); 
-      min-height: 100vh;
-      padding: 0;
-      margin: 0;
-      transition: background-color 0.3s;
+      display: flex; /* Fixed: changed 'd-lg-flex' to standard 'flex' */
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
   }
-  
+
   .app-container {
-      width: 100%;
-      min-height: 100vh; 
-      max-width: 100%; 
-      display: flex;
-      flex-direction: column; 
-      overflow: auto; 
-      background-color: var(--bg-primary); 
-      margin: 0; 
+      min-height: 100vh;
+      max-width: 100%;
+      margin: 0;
   }
-  
-  .text-primary {
-      color: var(--bs-primary) !important;
+
+  /* FIX: Increase carousel item size slightly on desktop */
+  .owl-item {
+      min-width: 350px;
   }
-  .fw-semibold {
-      font-weight: 600 !important;
+
+  /* Ensures internal content aligns within a defined central column */
+  .align-desktop {
+      max-width: 1000px;
+      margin: 0 auto;
+      width: 100% !important;
+      padding: 0 20px;
   }
-  .cursor-pointer {
-      cursor: pointer;
+
+  /* Desktop Navigation Links */
+  .nav-link-desktop {
+      color: var(--text-secondary);
+      background: none;
+      border: none;
+      font-weight: 500;
+      padding: 0.5rem 0.75rem;
+      transition: color 0.2s, background-color 0.2s;
   }
-  
-  /* Custom scrollbar for better aesthetics */
-  ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+
+  .nav-link-desktop:hover {
+      color: var(--bs-primary);
+      background-color: rgba(255, 87, 34, 0.1);
   }
-  ::-webkit-scrollbar-thumb {
-      background-color: var(--bs-primary); 
-      border-radius: 4px;
+
+  .nav-link-desktop.active-link {
+      color: var(--bs-primary);
+      font-weight: 700;
+      box-shadow: 0 1px 0 0 var(--bs-primary);
+      border-radius: 0;
   }
-  ::-webkit-scrollbar-track {
-      background-color: transparent;
+}
+
+/* Mobile specific padding for align-desktop content */
+@media (max-width: 1199px) {
+  .align-desktop {
+      padding: 0 15px;
   }
-  
-  
-  /* --- HEADER/NAVBAR STYLES (App.jsx) --- */
-  @media (min-width: 1200px) {
-      .align-desktop {
-          max-width: 100%; 
-          margin: 0 auto; 
-          width: 100% !important; 
-          padding: 0 20px;
-      }
-      .nav-link-desktop {
-          color: var(--text-secondary); 
-          background: none;
-          border: none;
-          font-weight: 500;
-          padding: 0.5rem 0.75rem;
-          transition: color 0.2s, background-color 0.2s;
-      }
-      .nav-link-desktop:hover {
-          color: var(--bs-primary);
-          background-color: rgba(255, 87, 34, 0.1); 
-      }
-      .nav-link-desktop.active-link {
-          color: var(--bs-primary);
-          font-weight: 700;
-          box-shadow: 0 1px 0 0 var(--bs-primary); 
-          border-radius: 0; 
-      }
-  }
-  @media (max-width: 1199px) {
-      .align-desktop {
-          padding: 0 15px; 
-      }
-  }
-  
-  /* Mobile Menu Overlay Styles */
+}
+
+/* --- General Polish --- */
+.text-primary {
+  color: var(--bs-primary) !important;
+}
+
+.fw-semibold {
+  font-weight: 600 !important;
+}
+
+.upload-card:hover {
+  box-shadow: 0 0 0 3px var(--bs-primary), 0 5px 15px var(--shadow-color) !important;
+  transform: translateY(-2px);
+  transition: all 0.2s ease-out;
+}
+
+.upload-card {
+  transition: all 0.2s ease-out;
+  box-shadow: 0 5px 15px var(--shadow-color) !important;
+}
+
+.cta-button {
+  /* Adds a subtle lift and glow */
+  box-shadow: 0 6px 15px var(--shadow-color), 0 2px 4px var(--shadow-color) !important;
+  letter-spacing: 0.5px;
+}
+
+.cta-button:active {
+  transform: scale(0.98);
+  box-shadow: 0 3px 8px var(--shadow-color), 0 1px 2px var(--shadow-color) !important;
+}
+
+.upload-area {
+  /* Enhanced dashed border with primary color hint */
+  border-color: var(--border-color-dashed) !important;
+  transition: border-color 0.2s;
+  cursor: pointer; /* Indicate interactivity */
+}
+
+.upload-area:hover {
+  border-color: var(--bs-primary) !important;
+}
+
+.upload-area.border-primary {
+  border-color: var(--bs-primary) !important;
+}
+
+/* Custom scrollbar for better aesthetics */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px; /* Added for horizontal scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--bs-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* Ensure horizontal scrolling is smooth on mobile uploads */
+.upload-card-container {
+  white-space: nowrap; /* Prevent wrapping in flex-row mode */
+}
+
+/* Custom Primary Button */
+.btn-primary-custom {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+  color: white;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.btn-primary-custom:hover {
+  background-color: var(--accent-red);
+  border-color: var(--accent-red);
+}
+
+.btn-primary-custom:active {
+  transform: scale(0.98);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* --- MODAL STYLES --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 5000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.modal-overlay.modal-open {
+  display: flex;
+  opacity: 1;
+}
+
+.modal-content {
+  transform: translateY(0);
+  transition: transform 0.3s;
+}
+
+.modal-overlay:not(.modal-open) .modal-content {
+  transform: translateY(-50px);
+}
+
+/* --- FULL SCREEN IMAGE VIEW STYLES --- */
+.full-screen-modal {
+  background-color: rgba(0, 0, 0, 0.95);
+}
+
+.full-screen-content {
+  width: 98%;
+  height: 98%;
+  max-width: 100%;
+  max-height: 100%;
+  background: none !important;
+  position: relative;
+}
+
+/* Mobile Menu Overlay Styles */
+.menu-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--bg-primary);
+  opacity: 0.98;
+  z-index: 2000;
+  display: none;
+  transition: opacity 0.3s;
+  padding-top: 70px;
+}
+
+.menu-overlay.show {
+  display: block;
+  opacity: 1;
+}
+
+.menu-content {
+  position: relative;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  transition: transform 0.3s, opacity 0.3s;
+  transform: translateY(0);
+  opacity: 1;
+  box-shadow: 0 5px 15px var(--shadow-color) !important;
+  margin: 0 1.5rem;
+}
+
+/* Hide menu on large screen */
+@media (min-width: 992px) {
   .menu-overlay {
-      position: absolute; 
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: var(--bg-primary); 
-      opacity: 0.98;
-      z-index: 2000;
-      display: none;
-      opacity: 0;
-      transition: opacity 0.3s;
-      padding-top: 70px; 
+      display: none !important;
   }
-  .menu-overlay.show {
-      display: block;
-      opacity: 1;
+}
+
+/* --- CUSTOM 3D CAROUSEL STYLES (OWL-LIKE) --- */
+.owl_wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  height: 350px;
+  border-radius: 0;
+  max-width: 100%;
+  margin: 0 auto;
+  /* background-color: #2A0A45; */
+  padding: 0 15px;
+}
+
+@media (min-width: 1200px) {
+  .owl_wrapper {
+      height: 500px;
+      max-width: 1100px;
+      border-radius: 0;
+      padding: 0;
   }
-  .menu-content {
-      position: relative; 
-      top: 0;
-      right: 0;
-      left: 0;
-      width: 100%;
-      transition: transform 0.3s, opacity 0.3s;
-      transform: translateY(0); 
-      opacity: 1;
-      box-shadow: 0 5px 15px var(--shadow-color) !important;
-      margin: 0 1.5rem; 
+}
+
+.owl_content {
+  display: flex;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  height: 100%;
+}
+
+.owl-item {
+  min-width: calc(70% - 30px);
+  height: 100%;
+  flex-shrink: 0;
+  padding: 0 0.5rem;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: all 0.5s ease-in-out;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-image-container {
+  position: relative;
+  width: 100%;
+  /* Adjusted height to show the image and leave space for padding/margin */
+  height: 90%;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  box-shadow: 0 5px 15px var(--shadow-color) !important;
+}
+
+.owl-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.owl-item .caption {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 1rem 0.5rem;
+  color: white;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.1) 100%);
+  border-radius: 0 0 0.75rem 0.75rem;
+}
+
+/* State Classes managed by JS: .active is applied to all visible items */
+.owl-item.active {
+  opacity: 0.5;
+}
+
+/* Item beside the center */
+.owl-item.middle_beside {
+  transform: scale(0.85);
+  opacity: 0.8;
+  z-index: 2;
+}
+
+/* Center Item */
+.owl-item.middle {
+  transform: scale(1);
+  opacity: 1;
+  z-index: 3;
+}
+
+/* Navigation Buttons */
+.owl_wrapper .prev,
+.owl_wrapper .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  text-align: center;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  z-index: 5;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  user-select: none;
+  transition: background 0.2s, transform 0.1s;
+}
+
+/* Positioned relative to the owl_wrapper */
+.owl_wrapper .prev {
+  left: 15px;
+}
+.owl_wrapper .next {
+  right: 15px;
+}
+
+.owl_wrapper .prev:hover,
+.owl_wrapper .next:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* --- HERO SECTION STYLES --- */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+}
+
+.hero-image {
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  /* Removed image and kept the overlay gradient for safety */
+  background: url('background image4.jpg') center center/cover no-repeat;
+}
+
+.hero-title {
+  color: #D4AF37;
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 1px;
+  font-weight: 700;
+  text-shadow: 0px 0px 18px rgba(212, 175, 55, 0.4);
+}
+
+.hero-button {
+  /* min-width: 150px; */
+  /* background-color: white; */
+  /* color: var(--bs-primary); */
+  /* padding: 12px 36px; */
+  border-radius: 50px;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+  font-size: 15px;
+  border: 2px solid transparent;
+}
+
+.hero-button:hover {
+  border: 3px solid #D4AF37;
+  border-color: #FFD700; /* Bright Gold */
+  box-shadow: 0 0 15px 5px rgba(212, 175, 55, 0.8);
+}
+
+.hero-button-secondary {
+  min-width: 150px;
+  transition: background 0.3s;
+}
+
+.hero-button-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 1200px) {
+  .hero-section {
+      height: 100vh;
+      margin-top: 0 !important;
+      margin-bottom: 0;
   }
-  @media (min-width: 992px) {
-      .menu-overlay {
-          display: none !important;
-      }
+
+  .hero-title {
+      font-size: 3.5rem;
   }
+}
+
+/* --- FOOTER STYLES --- */
+.cta-strip-gradient {
+  background: linear-gradient(135deg, var(--accent-red) 0%, var(--bs-primary) 100%);
+}
+
+.social-icons svg {
+  transition: color 0.2s;
+}
+
+.social-icons svg:hover {
+  color: var(--accent-gold) !important;
+}
