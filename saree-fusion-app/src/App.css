@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* --- GLOBAL COLOR VARIABLES AND THEME DEFINITIONS --- */
 :root {
       /* Color Palette (Based on provided image and purple theme) */
@@ -13,6 +14,14 @@
       --text-secondary:rgb(83, 52, 194);
       --shadow-color: rgba(198, 75, 255, 0.76); 
       --card-bg: #f3f0ff;
+=======
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+ 
+  text-align: center;
+}
+>>>>>>> 8f0345476e517be9e5a7b89662ebbb43d011ab27
 
   
       --border-color: rgba(138, 75, 255, 0.4);
@@ -65,6 +74,7 @@
       margin: 0;
       transition: background-color 0.3s;
   }
+<<<<<<< HEAD
   
   .app-container {
       width: 100%;
@@ -170,3 +180,40 @@
           display: none !important;
       }
   }
+=======
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+
+/* In your CSS file (e.g., App.css, index.css, or a dedicated utility file) */
+
+.text-metallic-gold {
+  /* Fallback color for browsers that don't support text clipping */
+  color: #D4AF37; /* A solid gold fallback */
+
+  /* Gradient for metallic effect */
+  background: linear-gradient(to bottom, #FFD700, #DAA520, #B8860B); /* Light gold to darker gold */
+  -webkit-background-clip: text; /* Clip the background to the shape of the text */
+  background-clip: text;
+  -webkit-text-fill-color: transparent; /* Make the text itself transparent so the background shows through */
+  color: transparent; /* Standard property for transparency */
+
+  /* Optional: Add a subtle text shadow for more depth and glow */
+  text-shadow: 0px 0px 8px rgba(255, 215, 0, 0.5), /* Gold glow */
+               0px 1px 2px rgba(0, 0, 0, 0.8); /* Darker shadow for depth */
+}
+
+.custom-owl-wrapper img {
+  width: 100%;
+  height: 320px;        /* Adjust based on 1st image height */
+  object-fit: cover;    /* Crop nicely without stretching */
+  border-radius: 10px;  /* Optional – keeps rounded corners */
+}
+>>>>>>> 8f0345476e517be9e5a7b89662ebbb43d011ab27
