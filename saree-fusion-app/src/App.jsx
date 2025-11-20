@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-
+import './App.css';
 // --- Icon SVGs (Using lucide-react style icons) ---
 const HomeIcon = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>;
 const UploadIcon = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>;
@@ -45,7 +45,7 @@ const Header = ({ startpage, togglemenu, isopenmenu, currentpage, theme, togglet
                 <path d="M12 11l3 3"></path>
             </svg>
             <span className="fs-4 fw-bold me-4" style={{ color: 'var(--bs-primary)' }}>Saree Fusion</span> */}
-          <img src="logo1.png" width={90} height={70} ></img>              
+          <img src="logo5.png" width={90} height={50} ></img>              
             {/* Desktop Navigation Links (Visible on large screens) */}
             <div className="d-none d-lg-flex align-items-center gap-4 ms-3">
                 <button 
@@ -58,7 +58,7 @@ const Header = ({ startpage, togglemenu, isopenmenu, currentpage, theme, togglet
                     onClick={() => startpage('upload')} 
                     className={`nav-link-desktop ${currentpage === 'upload' ? 'active-link' : ''}`}
                 >
-                    Upload Section
+                    Design Saree
                 </button>
             </div>
         </div>
@@ -73,9 +73,9 @@ const Header = ({ startpage, togglemenu, isopenmenu, currentpage, theme, togglet
                 }
             </button>
 
-            <button className="btn btn-light rounded-circle p-2 me-3" aria-label="Search" style={{ backgroundColor: 'var(--bg-input)' }}>
+            {/*<button className="btn btn-light rounded-circle p-2 me-3" aria-label="Search" style={{ backgroundColor: 'var(--bg-input)' }}>
                 <SearchIcon style={{ width: 24, height: 24, color: 'var(--icon-color)' }} />
-            </button>
+            </button>*/}
             {/* Menu Toggle (Hidden on large screens where desktop links are shown) */}
             <button className="btn btn-light rounded-circle p-2 d-lg-none" aria-label="Toggle Menu" onClick={() => togglemenu()} style={{ backgroundColor: 'var(--bg-input)' }}>
                 <MenuIcon style={{ width: 24, height: 24, color: 'var(--icon-color)' }} />
@@ -106,21 +106,33 @@ const Header = ({ startpage, togglemenu, isopenmenu, currentpage, theme, togglet
 const HeroSection = ({ startpage }) => (
     // The hero section must handle its own responsive margins since the app-container no longer provides them.
     <div className="hero-section position-relative overflow-hidden m-4 mb-5">
-        <img 
+        {/* <img 
             src=''
             alt="Beautifully crafted handloom saree worn by models in a traditional setting" 
             className="hero-image w-100 h-auto"
-            onError={(e) => { e.target.src = "https://placehold.co/1300x700/4B0082/FFFFFF?text=Handloom+Saree+Background"; }}
-        />
+            onError={(e) => { e.target.src = "" }}
+        /> */}
         <div className="hero-overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center p-4">
             <h1
-            className="hero-title text-white mb-3"
-            style={{ fontFamily: "'Italic', cursive", fontSize: "80px" }}
+            className="hero-title text-metallic-gold mb-3"
+            style={{ fontFamily: "'Trajan Pro'", fontSize: "80px" }}
                 >
     Saree Fusion
             </h1>
 
-            <p className="text-white mb-4 small fw-medium">By Sarees Designer</p>
+           <p className="hero-subtext"
+  style={{
+    fontStyle: "'Playfair Display', serif",
+    fontSize: "20px",
+    color: "#f8d87f",
+    fontWeight: "500",
+    letterSpacing: "0.3px",
+  }}
+  
+>
+  Where Expectations Meets Excellence
+</p>
+
             <div className="d-flex flex-column flex-sm-row gap-3">
                 <button 
                     className="btn btn-light text-uppercase fw-semibold py-2 px-4 rounded-pill shadow-lg hero-button"
@@ -128,12 +140,12 @@ const HeroSection = ({ startpage }) => (
                 >
                     Explore
                 </button>
-                <button 
+                {/* <button 
                     className="btn btn-outline-light text-uppercase fw-semibold py-2 px-4 rounded-pill shadow-lg hero-button-secondary"
                     onClick={() => startpage('upload')}
                 >
                     Shop Banarasi
-                </button>
+                </button> */}
             </div>
         </div>
     </div>
@@ -605,7 +617,15 @@ const UploadView = ({ startGeneration, palluImage, setPalluImage, bodyImage, set
 
     return (
         <div className="align-desktop d-flex d-xl-flex flex-column pb-5">
-            <h1 className="fs-4 fw-bold mb-4 border-bottom pb-2" style={{ color: 'var(--text-primary)', borderColor: 'var(--border-color)' }}>Design Workspace</h1>
+            <h1 className="fs-4 fw-bold mb-4 pt-3 center "
+    style={{
+        color: 'white',
+        borderColor: 'var(--border-color)',
+        fontStyle: 'Italic'
+    }}>
+    Design Workspace
+</h1>
+
             <div className=" card upload-section-card rounded-3 border-2 shadow-4 p-3 d-flex flex-column gap-4" style={{ backgroundColor: 'var(--card-bg)' }}>
                 
                 {/* START: Responsive Upload Cards Container using Bootstrap Grid */}
@@ -978,10 +998,10 @@ const App = () => {
                 --accent-pink: #e879f9; /* Soft Pink Glow */
                 --icon-color: var(--text-primary);
 
-                --bg-primary:#C8A2C8; /* Light Lavender Background */
+                --bg-primary:rgb(25, 25, 70); /* Light Lavender Background */
                 --bg-input: #f3f0ff; /* Very Light Lavender Background */
-                --text-primary: #2c2c54; /* Deep Indigo Text */
-                --text-secondary: #6c6f92; /* Soft Muted Indigo */
+                --text-primary: #fffff; /* Deep Indigo Text */
+                --text-secondary: white; /* Soft Muted Indigo */
                 --shadow-color: rgba(138, 75, 255, 0.25); /* Purple Shadow */
                 --card-bg: #f3f0ff;
 
@@ -1033,6 +1053,15 @@ const App = () => {
                     margin: 0;
                     transition: background-color 0.3s;
                 }
+                    .hero-subtext {
+                    font-family: 'Cormorant Garamond', serif;
+                    color: #f5d88a;
+                    font-size: 18px;
+                    font-weight: 500;
+                    letter-spacing: 0.4px;
+                     margin-top: 6px;
+                    }
+
                 
                 .app-container {
                     width: 100%;
@@ -1046,6 +1075,9 @@ const App = () => {
                     
                     margin: 0; 
                 }
+                    .navbar {
+                    padding: 12px 40px;
+                    }
                 
                 /* Desktop/Laptop Styles: Make the app wide, tall, and centered */
                 @media (min-width: 1200px) {
@@ -1266,10 +1298,10 @@ const App = () => {
                     overflow: hidden;
                     height: 350px;
                     border-radius: 0; 
-                    box-shadow: none !important; 
+                    box-shadow: important; 
                     max-width: 100%; 
                     margin: 0 auto; 
-                    background-color: var(--card-bg);
+                    // background-color: #2A0A45;  
                     padding: 0 15px; 
                 }
                 @media (min-width: 1200px) {
@@ -1307,6 +1339,7 @@ const App = () => {
                     overflow: hidden;
                     border-radius: 0.75rem;
                     box-shadow: 0 5px 15px var(--shadow-color) !important; 
+                    
                 }
                 .owl-item img {
                     width: 100%;
@@ -1369,29 +1402,54 @@ const App = () => {
                 }
 
                 /* --- HERO SECTION STYLES --- */
+                // .hero-section {
+                //     height: 400px; /* Mobile height */
+                // }
                 .hero-section {
-                    height: 400px; /* Mobile height */
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                 align-items: center;
+                 padding-top: 40px;
                 }
+
                 .hero-image {
                     height: 100%;
                     object-fit: cover;
                 }
                 .hero-overlay {
                     /* Removed image and kept the overlay gradient for safety */
-                    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://t3.ftcdn.net/jpg/07/63/71/26/240_F_763712639_rQX1PTuGWi6u6BthgcgI82xzidM8nZ5K.jpg') center center/cover no-repeat;
+                    background: url('background image4.jpg') center center/cover no-repeat;
+                
+                    
                 }
                 .hero-title {
-                    font-size: 1.8rem;
-                    line-height: 1.2;
-                    letter-spacing: 1px;
+                color: #D4AF37;
+                font-family: 'Playfair Display', serif;
+                letter-spacing: 1px;
+                font-weight: 700;
+                text-shadow: 0px 0px 18px rgba(212, 175, 55, 0.4);
                 }
+
                 .hero-button {
-                    min-width: 150px;
-                    background-color: white;
-                    color: var(--bs-primary);
+                    // min-width: 150px;
+                    // background-color: white;
+                    // color: var(--bs-primary);
+                    // padding: 12px 36px;
+                    border-radius: 50px;
+                    letter-spacing: 0.8px;
+                    font-weight: 600;
+                     font-size: 15px;
+                       border: 2px solid transparent;
+                       
                 }
+                       
                 .hero-button:hover {
-                    background-color: #f0f0f0;
+                  border: 3px solid #D4AF37; 
+                    border-color: #FFD700;  /* Bright Gold */
+                     box-shadow: 0 0 15px 5px rgba(212, 175, 55, 0.8); 
+                    
                 }
                 .hero-button-secondary {
                     min-width: 150px;
@@ -1403,9 +1461,11 @@ const App = () => {
 
                 @media (min-width: 1200px) {
                     .hero-section {
-                        height: 600px; 
-                        border-radius: 0;
-                    }
+  height: 100vh;
+  margin-top: 0 !important;
+  margin-bottom: 0;
+}
+
                     .hero-title {
                         font-size: 3.5rem;
                     }
