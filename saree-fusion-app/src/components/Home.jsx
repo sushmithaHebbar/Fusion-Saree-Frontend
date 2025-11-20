@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import sareefusion from '../assets/sareefusion.png';
-
+import '../App.css' 
 // DATA (Kept local since it's specific to the carousel)
 const curouselItem = [
     { id: 1, src: "https://www.parisera.com/cdn/shop/files/DSC_4630-1_Copy.jpg?v=1750314810", title: "Classic Fusion Design", description: "A perfect blend of modern silhouettes with traditional Banarasi silk." },
@@ -13,57 +13,73 @@ const auto_time = 5000;
 
 // Re-defining required icons/helpers locally for clarity, assuming they are available via context or props if they were used.
 const ArrowRightIcon = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="12 4 19 12 12 20"/><line x1="19" x2="5" y1="12" y2="12"/></svg>;
-
-const HeroSection = ({ startpage }) => (
+export const HeroSection = ({ startpage }) => (
+    // The hero section must handle its own responsive margins since the app-container no longer provides them.
     <div className="hero-section position-relative overflow-hidden m-4 mb-5">
-        <img
-            src={sareefusion}
-            alt="Beautifully crafted handloom saree worn by models in a traditional setting"
+        {/* <img 
+            src=''
+            alt="Beautifully crafted handloom saree worn by models in a traditional setting" 
             className="hero-image w-100 h-auto"
-            onError={(e) => { e.target.src = "https://placehold.co/1300x700/4B0082/FFFFFF?text=Handloom+Saree+Background"; }}
-        />
+            onError={(e) => { e.target.src = "" }}
+        /> */}
         <div className="hero-overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center p-4">
             <h1
-            className="hero-title text-white mb-3"
-            style={{ fontFamily: "'Italianno', cursive" }}
+            className="hero-title text-metallic-gold mb-3"
+            style={{ fontFamily: "'Trajan Pro'", fontSize: "80px" }}
                 >
     Saree Fusion
             </h1>
 
-            <p className="text-white mb-4 small fw-medium">By Saree Designer</p>
+           <p className="hero-subtext"
+  style={{
+    fontStyle: "'Playfair Display', serif",
+    fontSize: "20px",
+    color: "#f8d87f",
+    fontWeight: "500",
+    letterSpacing: "0.3px",
+  }}
+  
+>
+  Where Expectations Meets Excellence
+</p>
+
             <div className="d-flex flex-column flex-sm-row gap-3">
-                <button
+                <button 
                     className="btn btn-light text-uppercase fw-semibold py-2 px-4 rounded-pill shadow-lg hero-button"
                     onClick={() => startpage('upload')}
                 >
                     Explore
                 </button>
-                <button
+                {/* <button 
                     className="btn btn-outline-light text-uppercase fw-semibold py-2 px-4 rounded-pill shadow-lg hero-button-secondary"
                     onClick={() => startpage('upload')}
                 >
-                    Shop
-                </button>
+                    Shop Banarasi
+                </button> */}
             </div>
         </div>
     </div>
 );
 
-const CustomCarousel = ({ items }) => {
+export const CustomCarousel = ({ items }) => {
     const [centerIndex, setCenterIndex] = useState(0);
     const contentRef = useRef(null);
     const wrapperRef = useRef(null);
     const itemsRef = useRef([]);
 
+    // Logic to update item classes and position based on centerIndex
     const CarouselClasses = useCallback(() => {
         const items = itemsRef.current;
         const content = contentRef.current;
         const wrapper = wrapperRef.current;
         if (!items || !content || !wrapper || items.length === 0) return;
 
+        // 1. Apply 3D visibility classes based on centerIndex
         items.forEach((item, index) => {
             if (!item) return;
-            item.className = 'owl-item';
+            item.className = 'owl-item'; // Reset class
+            
+            // Calculate distance from the center (0, 1, 2, ...)
             const distance = Math.abs(index - centerIndex);
 
             if (distance === 0) {
@@ -71,37 +87,48 @@ const CustomCarousel = ({ items }) => {
             } else if (distance === 1) {
                 item.classList.add('active', 'middle_beside');
             } else if (distance > 1) {
-                item.classList.add('active');
+                item.classList.add('active'); // General active for opacity transition
             }
         });
 
-        const itemWidth = items[0]?.offsetWidth || (wrapper.clientWidth * 0.7);
+        // 2. Calculate and apply content horizontal translation (to center the middle item)
+        // Check if items[0] exists before accessing offsetWidth
+        const itemWidth = items[0]?.offsetWidth || (wrapper.clientWidth * 0.7); // Fallback to 70% of wrapper width
         const wrapperWidth = wrapper.clientWidth;
+        
+        // This calculation centers the current 'middle' item visually
         const offset = -(centerIndex * itemWidth) + (wrapperWidth / 2) - (itemWidth / 2);
         
         content.style.transform = `translateX(${offset}px)`;
     }, [centerIndex]);
 
+    // Handles movement and loop
     const moveCarousel = useCallback((direction) => {
         setCenterIndex(prevIndex => {
             let newIndex = prevIndex + direction;
             if (newIndex >= items.length) {
-                newIndex = 0;
+                newIndex = 0; // Loop back to start (Classic Fusion)
             } else if (newIndex < 0) {
-                newIndex = items.length - 1;
+                newIndex = items.length - 1; // Loop to end
             }
             return newIndex;
         });
     }, [items.length]);
 
+    // Initial load, state change, and window resize effects
     useEffect(() => {
         CarouselClasses();
     }, [centerIndex, CarouselClasses]);
 
+    // Auto-advance and Resize listeners
     useEffect(() => {
+        // Auto-advance interval
         const interval = setInterval(() => moveCarousel(1), auto_time);
+
+        // Resize listener
         window.addEventListener('resize', CarouselClasses);
 
+        // Cleanup
         return () => {
             clearInterval(interval);
             window.removeEventListener('resize', CarouselClasses);
@@ -109,17 +136,20 @@ const CustomCarousel = ({ items }) => {
     }, [moveCarousel, CarouselClasses]);
 
     return (
+        // The container needs max-width for desktop, but padding for mobile centering
         <div id="custom-owl-wrapper" ref={wrapperRef} className="owl_wrapper mb-5">
             <button className="prev no_select" aria-label="Previous Design" onClick={() => moveCarousel(-1)}>&lt;</button>
             <div ref={contentRef} className="owl_content">
                 {items.map((item, index) => (
-                    <div
-                        key={item.id}
+                    <div 
+                        key={item.id} 
                         ref={el => itemsRef.current[index] = el}
                         className="owl-item"
                     >
-                        <div
+                        {/* Placeholder image for a saree */}
+                        <div 
                             className="carousel-image-container cursor-pointer"
+                            // ADDED: Opens image source URL in a new tab
                             onClick={() => window.open(item.src, '_blank')}
                         >
                             <img src={item.src} alt={item.title} className="w-100 h-100 object-fit-cover rounded-3" />
@@ -143,9 +173,11 @@ export const HomeView = ({ startpage }) => (
 
         <CustomCarousel items={curouselItem} />
 
+        {/* Start of Centered Content: Applied align-desktop here */}
         <div className="align-desktop d-flex flex-column gap-4 pb-5">
-            <h2 className="text text-center fw-bold fs-3 mb-4" >Design Components</h2>
+            <h2 className="text-center fw-bold fs-3 mb-4" style={{ color: 'var(--text-primary)' }}>Design Components</h2>
             
+            {/* Upload Sections */}
             <div className="row g-3">
                 <div className="col-4">
                     <div className="card border-0 shadow-lg p-3 rounded-4 h-100 text-center cursor-pointer upload-card" style={{ backgroundColor: 'var(--card-bg)' }} onClick={() => startpage('upload')}>
@@ -173,16 +205,19 @@ export const HomeView = ({ startpage }) => (
                 </div>
             </div>
 
+            {/* CTA Button and Tagline */}
             <div className="d-flex flex-column align-items-center pt-4">
-                {/* <button onClick={() => startpage('upload')} className="btn btn-primary-custom w-100 py-3 rounded-4 shadow-xl mb-4 d-flex align-items-center justify-content-center cta-button">
+                <button onClick={() => startpage('upload')} className="btn btn-primary-custom w-100 py-3 rounded-4 shadow-xl mb-4 d-flex align-items-center justify-content-center cta-button">
                     <span className="fs-5">Design Your Custom Saree</span>
                     <ArrowRightIcon className="ms-3" style={{ width: 24, height: 24 }} />
-                </button> */}
+                </button>
                 
                 <p className="text-center large px-10 fw-medium fw-bold" style={{ color: 'var(--text-secondary)' }}>
-                    where tradition meets innovation, design your dream saree with your unique blend of body, border, and pallu.
+                 where tradition meets innovation, design your dream saree with your unique blend of body, border, and pallu.
                 </p>
             </div>
         </div>
+        {/* End of Centered Content */}
     </div>
 );
+
