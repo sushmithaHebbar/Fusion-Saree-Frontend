@@ -1,4 +1,5 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import Spinner from 'react-bootstrap/esm/Spinner';
 
 // Re-defining required icons/helpers locally
 const PlusIcon = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>;
@@ -7,17 +8,57 @@ const EditIcon = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" w
 const CheckIcon = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>;
 const ArrowRightIcon = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="12 4 19 12 12 20"/><line x1="19" x2="5" y1="12" y2="12"/></svg>;
 
-const UploadArea = ({ title, placeholder, image, setter, clear, openModalCroped, isCropped  , part , setId}) => {
-      const fileInputRef = useRef(null);
 
-      const handleFileUpload = (file) => {
-            if (!file || !file.type.startsWith('image/')) return;
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                  setter(reader.result); // Stores base64 data URL
-            };
-            reader.readAsDataURL(file);
-      };
+const UploadArea = ({ title, placeholder, image, setter, clear, openModalCroped, isCropped  , part , setId }) => {
+        const fileInputRef = useRef(null);
+        const [isLoading , setIsLoading] = useState(false)
+        const base_url = import.meta.env.VITE_API_URL
+        const handleFileUpload = async (file) => {
+              if (!file) return;
+              setIsLoading(true)
+              //Dont Touch this 
+              const formData = new FormData();
+              formData.append('image', file);
+          
+              try {
+                  const response = await fetch(`${base_url}/upload_${part}`, {
+                      method: 'POST',
+                      body: formData,
+                  });
+          
+                  const data = await response.json();
+                  console.log('Response from server:', data.data);
+              const fetchImage = async (file_id , part ) => {
+                    const formData = new FormData();
+                    formData.append("file_id", file_id);
+                
+                    const response = await fetch(`${base_url}/get_${part}`, {
+                        method: "POST",
+                        body: formData
+                    });
+                
+                    const data = await response.json();
+                    console.log("Backend Response:", data);
+                
+                    if (data.file_url) {
+                        const base64Image = `${data.file_url}`;
+                        console.log(base64Image)
+                        setter(base64Image); // Store the image in your state
+                    }
+                };
+                  
+              fetchImage(data.data , part)
+              setId(data.data)
+              localStorage.setItem(`${part}Id`, data.data)
+              setIsLoading(false)
+            } catch (error) {
+                console.error("Upload failed:", error);
+                //Alert Give 
+                setIsLoading(false)
+                alert("Error "+ error)
+            }
+        };
+        
 
       const handleDragOver = (e) => {
           e.preventDefault();
@@ -91,32 +132,43 @@ const UploadArea = ({ title, placeholder, image, setter, clear, openModalCroped,
                       hidden 
                   />
               </div>
-              <div 
-                  className={`border border-2 border-dashed rounded-4 p-2 text-center upload-area d-flex flex-column align-items-center justify-content-center position-relative ${image ? 'p-0' : 'p-4'} ${isCropped ? 'border-success' : ''}`}
-                  style={{ height: 120, borderColor: 'var(--border-color-dashed)', overflow: 'hidden' }}
-                  onDragOver={handleDragOver}
-                  onDragLeave={handleDragLeave}
-                  onDrop={handleDrop}
-                  onClick={!image ? () => fileInputRef.current.click() : undefined}
-              >
-                  {image ? (
-                      <>
-                          <img 
-                              src={image} 
-                              alt="Uploaded Preview" 
-                              className="w-100 h-100 object-fit-cover rounded-4" 
-                              style={{ position: 'absolute', top: 0, left: 0 }}
-                          />
-                           {isCropped && (
-                              <span className="badge bg-success rounded-pill fw-semibold text-uppercase d-flex align-items-center px-2 py-1 position-absolute bottom-0 end-0 m-2" style={{ zIndex: 10 }}>
-                                  <CheckIcon style={{ width: 12, height: 12, marginRight: '4px' }} /> Edited
-                              </span>
-                          )}
-                      </>
-                  ) : (
-                      <p className="mb-0 fw-medium" style={{ color: 'var(--text-secondary)' }}>{placeholder}</p>
-                  )}
-              </div>
+              <div
+    className={`border border-2 border-dashed rounded-4 p-2 text-center upload-area d-flex flex-column align-items-center justify-content-center position-relative ${image ? 'p-0' : 'p-4'} ${isCropped ? 'border-success' : ''}`}
+    style={{ height: 120, borderColor: 'var(--border-color-dashed)', overflow: 'hidden' }}
+    onDragOver={handleDragOver}
+    onDragLeave={handleDragLeave}
+    onDrop={handleDrop}
+    onClick={!image ? () => fileInputRef.current.click() : undefined}
+>
+    {isLoading ? (
+        <Spinner animation="grow" style={{ color: '#8a4bff' }} />
+    ) : (
+        <>
+            {image ? (
+                <>
+                    <img
+                        src={image}
+                        alt="Uploaded Preview"
+                        className="w-100 h-100 object-fit-cover rounded-4"
+                        style={{ position: 'absolute', top: 0, left: 0 }}
+                    />
+                    {isCropped && (
+                        <span 
+                            className="badge bg-success rounded-pill fw-semibold text-uppercase d-flex align-items-center px-2 py-1 position-absolute bottom-0 end-0 m-2" 
+                            style={{ zIndex: 10 }}
+                        >
+                            <CheckIcon style={{ width: 12, height: 12, marginRight: '4px' }} /> Edited
+                        </span>
+                    )}
+                </>
+            ) : (
+                <p className="mb-0 fw-medium" style={{ color: 'var(--text-secondary)' }}>
+                    {placeholder}
+                </p>
+            )}
+        </>
+    )}
+</div>
           </div>
       );
   };
@@ -264,7 +316,8 @@ const UploadArea = ({ title, placeholder, image, setter, clear, openModalCroped,
 };
 
 
-export const UploadView = ({ startGeneration, palluImage, setPalluImage, bodyImage, setBodyImage, borderImage, setBorderImage, description, setDescription, croppedPallu, croppedBody, croppedBorder, isCropModalOpen, imageTypeToCrop, closeCropModal, openModalCroped, setCroppedPallu, setCroppedBody, setCroppedBorder }) => {
+export const UploadView = ({ startGeneration, palluImage, setPalluImage, bodyImage, setBodyImage, borderImage, setBorderImage, description, setDescription, croppedPallu, croppedBody, croppedBorder, isCropModalOpen, imageTypeToCrop, closeCropModal, openModalCroped, setCroppedPallu,
+     setCroppedBody, setCroppedBorder , palluId , borderId,bodyId ,setBodyId ,setBorderId,setPalluId  , navigate }) => {
   
       const imageStateMap = {
           pallu: { image: palluImage, setter: setPalluImage, croppedSetter: setCroppedPallu, isCropped: !!croppedPallu },
@@ -304,6 +357,9 @@ export const UploadView = ({ startGeneration, palluImage, setPalluImage, bodyIma
                                           clear={() => clearImage('pallu')}
                                           openModalCroped={() => openModalCroped('pallu', palluImage)}
                                           isCropped={!!croppedPallu}
+                                          part='pallu'
+                                          setId = {setPalluId}
+                                        
                                     />
                               </div>
 
@@ -316,6 +372,8 @@ export const UploadView = ({ startGeneration, palluImage, setPalluImage, bodyIma
                                           clear={() => clearImage('body')}
                                           openModalCroped={() => openModalCroped('body', bodyImage)}
                                           isCropped={!!croppedBody}
+                                          part='body'
+                                          setId = {setBodyId}
                                     />
                               </div>
                           
@@ -328,6 +386,8 @@ export const UploadView = ({ startGeneration, palluImage, setPalluImage, bodyIma
                                           clear={() => clearImage('border')}
                                           openModalCroped={() => openModalCroped('border', borderImage)}
                                           isCropped={!!croppedBorder}
+                                          part='border'
+                                          setId = {setBorderId}
                                     />
                               </div>
                         </div>
@@ -344,7 +404,13 @@ export const UploadView = ({ startGeneration, palluImage, setPalluImage, bodyIma
                               ></textarea>
                         </div>
 
-                        <button onClick={startGeneration} className="btn btn-primary-custom w-100 py-3 mt-4 rounded-4 shadow-xl cta-button">
+                        <button onClick={
+                            ()=>{
+                                navigate("/result")
+                            }
+                        }
+                        
+                         className="btn btn-primary-custom w-100 py-3 mt-4 rounded-4 shadow-xl cta-button">
                               <span className="fs-5">GENERATE FUSION</span>
                         </button>
                   </div>
