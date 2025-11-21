@@ -60,11 +60,14 @@ export const ResultView = ({ generatedImageUrl, startpage, croppedImages, openFu
             formData.append('prompt', description || "");
 
             console.log("1. Starting Main Generation...");
-            const response = await fetch(`${base_url}/generate-saree`, {
+            /*const response = await fetch(`${base_url}/generate-saree`, {
+                method: 'POST',
+                body: formData,
+            });*/
+            const response = await fetch(`${base_url}/mock_update`, {
                 method: 'POST',
                 body: formData,
             });
-
             const data = await response.json();
             
             if (data.file && data.saree_id) {
@@ -98,12 +101,15 @@ export const ResultView = ({ generatedImageUrl, startpage, croppedImages, openFu
             formData.append('prompt',`Generate variant ${designNo}` ); // Use the ID passed from step 1
            
             // Add other fields if your API needs them for variations
-            
+            /*
             const response = await fetch(`${base_url}/generate-saree/${sareeId}/${currentDesignNo}`, { 
                 method: 'POST', 
                body: formData
+            });*/
+            const response = await fetch(`${base_url}/mock_update`, { 
+                method: 'POST', 
+               body: formData
             });
-            
             const data = await response.json();
             
             if (data.file) {

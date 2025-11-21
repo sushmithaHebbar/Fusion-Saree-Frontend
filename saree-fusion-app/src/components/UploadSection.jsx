@@ -21,22 +21,29 @@ const UploadArea = ({ title, placeholder, image, setter, clear, openModalCroped,
               formData.append('image', file);
           
               try {
-                  const response = await fetch(`${base_url}/upload_${part}`, {
+                //This is main
+                  /*const response = await fetch(`${base_url}/upload_${part}`, {
                       method: 'POST',
                       body: formData,
-                  });
-          
+                  });*/
+                  const response = await fetch(`${base_url}/mock_update`, {
+                    method: 'POST',
+                    body: formData,
+                });
                   const data = await response.json();
                   console.log('Response from server:', data.data);
               const fetchImage = async (file_id , part ) => {
                     const formData = new FormData();
                     formData.append("file_id", file_id);
-                
-                    const response = await fetch(`${base_url}/get_${part}`, {
+                    //main thing 
+                   /* const response = await fetch(`${base_url}/get_${part}`, {
                         method: "POST",
                         body: formData
-                    });
-                
+                    });*/
+                    const response = await fetch(`${base_url}/mock_update`, {
+                        method: "POST",
+                        body: formData
+                    })
                     const data = await response.json();
                     console.log("Backend Response:", data);
                 
