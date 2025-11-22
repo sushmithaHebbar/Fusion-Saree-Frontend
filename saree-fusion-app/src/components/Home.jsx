@@ -6,8 +6,8 @@ const curouselItem = [
     { id: 1, src: "https://www.parisera.com/cdn/shop/files/DSC_4630-1_Copy.jpg?v=1750314810", title: "Classic Fusion Design", description: "A perfect blend of modern silhouettes with traditional Banarasi silk." },
     { id: 2, src: "https://d3sftlgbtusmnv.cloudfront.net/blog/wp-content/uploads/2024/11/cp-4-840x425.jpg", title: "Aqua Border Saree", description: "Featuring a delicate aqua border with silver thread work, ideal for evening events." },
     { id: 3, src: "https://t3.ftcdn.net/jpg/15/10/74/78/240_F_1510747809_kJhAYaq6rOHXYbtQDEg2avzLq96lUTlo.jpg", title: "Intricate Weave Pattern", description: "Bold, digitally woven patterns on a rich red fabric for a stunning look." },
-    { id: 4, src: "https://t3.ftcdn.net/jpg/15/10/74/78/240_F_1510747809_kJhAYaq6rOHXYbtQDEg2avzLq96lUTlo.jpg", title: "Intricate Weave Pattern", description: "Bold, digitally woven patterns on a rich red fabric for a stunning look." },
-    { id: 5, src: "https://t3.ftcdn.net/jpg/15/10/74/78/240_F_1510747809_kJhAYaq6rOHXYbtQDEg2avzLq96lUTlo.jpg", title: "Intricate Weave Pattern", description: "Bold, digitally woven patterns on a rich red fabric for a stunning look." },
+    // { id: 4, src: "https://t3.ftcdn.net/jpg/15/10/74/78/240_F_1510747809_kJhAYaq6rOHXYbtQDEg2avzLq96lUTlo.jpg", title: "Intricate Weave Pattern", description: "Bold, digitally woven patterns on a rich red fabric for a stunning look." },
+    // { id: 5, src: "https://t3.ftcdn.net/jpg/15/10/74/78/240_F_1510747809_kJhAYaq6rOHXYbtQDEg2avzLq96lUTlo.jpg", title: "Intricate Weave Pattern", description: "Bold, digitally woven patterns on a rich red fabric for a stunning look." },
 ];
 const auto_time = 5000;
 
@@ -170,7 +170,12 @@ export const HomeView = ({ navigate }) => (
     <div className="d-flex d-lg-flex flex-column">
         
         <HeroSection navigate={navigate}/>
-
+            <h1 
+            className="text-center fw-bold fs-2 mb-4" 
+            style={{ color: 'var(--text-primary)' }}
+        >
+            Saree Collections
+        </h1>
         <CustomCarousel items={curouselItem} />
 
         {/* Start of Centered Content: Applied align-desktop here */}
@@ -207,7 +212,7 @@ export const HomeView = ({ navigate }) => (
 
             {/* CTA Button and Tagline */}
             <div className="d-flex flex-column align-items-center pt-4">
-                <button onClick={() => navigate('/upload')} className="btn btn-primary-custom w-100 py-3 rounded-4 shadow-xl mb-4 d-flex align-items-center justify-content-center cta-button">
+                <button onClick={() => navigate('/upload')} className="btn text-white w-100 py-3 rounded-4 shadow-xl mb-4 d-flex align-items-center justify-content-center cta-button">
                     <span className="fs-5">Design Your Custom Saree</span>
                     <ArrowRightIcon className="ms-3" style={{ width: 24, height: 24 }} />
                 </button>

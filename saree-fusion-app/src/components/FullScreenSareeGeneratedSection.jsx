@@ -187,7 +187,7 @@ export const ResultView = ({ generatedImageUrl, startpage, croppedImages, openFu
                         <span className="ms-2">Re-Generate</span>
                     </button>
                     {/* UPDATED ACTION: Open Full Screen Modal */}
-                    <button onClick={openFullScreenView} className="btn btn-primary-custom fw-semibold rounded-pill shadow-lg d-flex align-items-center justify-content-center py-2 px-4 action-button">
+                    <button onClick={openFullScreenView} className="btn btn-primary-custom text-white fw-semibold rounded-pill shadow-lg d-flex align-items-center justify-content-center py-2 px-4 action-button">
                         <SaveIcon className="me-2" />
                         <span>Save & View</span>
                     </button>
@@ -219,7 +219,7 @@ export const ResultView = ({ generatedImageUrl, startpage, croppedImages, openFu
                     )
                 }
             </div>
-             <p className="text-center mt-2 fw-semibold small">Generated Result 1</p>
+             <p className="text-center mt-2 fw-semibold small text-white">Generated Result 1</p>
         </div>
 
         {/* VARIATION 2 BOX */}
@@ -243,7 +243,7 @@ export const ResultView = ({ generatedImageUrl, startpage, croppedImages, openFu
                     )
                 }
             </div>
-            <p className="text-center mt-2 fw-semibold small">Generated Result 2</p>
+            <p className="text-center mt-2 fw-semibold small text-white">Generated Result 2</p>
         </div>
     </div>
 </div>

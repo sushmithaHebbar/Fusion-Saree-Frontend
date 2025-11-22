@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { BrowserRouter, Routes, Route, Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet, Link, useLocation, useNavigate,Navigate } from 'react-router-dom';
 import { HomeView } from './components/Home.jsx';
 import { UploadView, LoadingView } from './components/UploadSection.jsx';
 import { ResultView, FullScreenModal } from './components/FullScreenSareeGeneratedSection.jsx';
 import Spinner from 'react-bootstrap/Spinner'; 
 import './App.css';
+import {Login } from './components/LoginPage.jsx'
 
 // --- ICONS (Keep your existing Icon definitions here) ---
 const HomeIcon = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>;
@@ -16,6 +17,23 @@ const TwitterIcon = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg
 const InstagramIcon = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>;
 const FacebookIcon = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>;
 
+
+// New component to protect routes
+
+const ProtectedRoute = ({ user, redirectPath = '/login', children }) => {
+const isAuthenticated = user !== null; 
+
+    if (!isAuthenticated) {
+        // Redirect to the login page
+        return <Navigate to={redirectPath} replace />;
+    }
+
+    return children ? children : <Outlet />; 
+};
+
+
+
+
 // --- 1. REFACTORED HEADER (Uses Links & useLocation) ---
 const Header = ({ togglemenu, isopenmenu, theme, toggletheme }) => {
     const location = useLocation(); // Gets current URL path
@@ -23,6 +41,7 @@ const Header = ({ togglemenu, isopenmenu, theme, toggletheme }) => {
     const isActive = (path) => location.pathname === path ? 'active-link' : '';
 
     return (
+       
         <header className="px-4 py-3 d-flex align-items-center justify-content-between border-bottom sticky-top shadow-sm navbar-height vw-100" style={{ zIndex: 10, backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-color)' }}>
             {/* Left Section: Logo and Desktop Links */}
             <div className="d-flex align-items-center">
@@ -85,8 +104,8 @@ const Footer = () => {
     return (
         <footer className="w-100 mt-auto pt-5" style={{ backgroundColor: footerBg, color: textColor }}>
             <div className="text-center py-4 px-1 cta-strip-gradient">
-                <h3 className="fs-3 fw-bold text-white ">Looking For a Custom Designer Saree?</h3>
-                <Link to="/upload" className="btn fw-semibold py-3 px-5 rounded-pill shadow-lg text-uppercase" style={{ backgroundColor: 'var(--accent-gold)', color: 'var(--text-primary)', textDecoration: 'none' }}>
+                <h3 className="fs-3 fw-bold  text-black ">Looking For a Custom Designer Saree?</h3>
+                <Link to="/upload" className="btn fw-semibold py-3 px-5 rounded-pill shadow-lg text-uppercase text-black" style={{ backgroundColor: 'var(--accent-gold)', color: 'var(--text-primary)', textDecoration: 'none' }}>
                     Contact Us
                 </Link>
             </div>
@@ -168,6 +187,23 @@ const App = () => {
     const [isopenmenu, setispenmenu] = useState(false);
     const [theme, setTheme] = useState('light');
     
+
+    const [user, setUser] = useState(() => {
+    // Check local storage for a user (simulating persistent login)
+    return localStorage.getItem('sareeFusionUser') ? { name: localStorage.getItem('sareeFusionUser') } : null;
+});
+
+// A function to handle successful login (called from Login component)
+    const handleLoginSuccess = (name) => {
+    localStorage.setItem('sareeFusionUser', name);
+    setUser({ name });
+    };
+
+// A function to handle logout (optional, but good practice)
+    const handleLogout = () => {
+    localStorage.removeItem('sareeFusionUser');
+    setUser(null);
+    };
     // Data State
     const [generatedImageUrl, setGeneratedImageUrl] = useState('');
     const [palluImage, setPalluImage] = useState(null);
@@ -259,8 +295,10 @@ const App = () => {
     return (
         <BrowserRouter>
             <Routes>
+               <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
                 {/* Parent Route: Layout */}
                 <Route element={
+                    <ProtectedRoute user={user} redirectPath="/login">
                     <Layout 
                         togglemenu={togglemenu} 
                         isopenmenu={isopenmenu} 
@@ -270,8 +308,10 @@ const App = () => {
                         generatedImageUrl={generatedImageUrl}
                         closeFullScreenView={closeFullScreenView}
                     />
+                    </ProtectedRoute>
                 }>
                     {/* CHILD ROUTES */}
+
                     <Route path="/" element={<HomeWrapper resetUploadState={resetUploadState} />} />
                     
                     <Route path="/upload" element={

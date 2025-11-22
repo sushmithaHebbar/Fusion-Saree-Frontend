@@ -1,5 +1,5 @@
-.design-workspace{
-    color:  blue;
+design-workspace{
+    color:  white;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 44px;
 }
@@ -80,3 +80,11 @@
     .modal-overlay:not(.modal-open) .modal-content {
         transform: translateY(-50px);
     }
+
+    .upload-placeholder {
+    /* This makes the color switch between black (#212529) and white (#f8f9fa) */
+    color: black; 
+    
+    /* You may also need to increase the font weight to make it stand out */
+    font-weight: 500; 
+}

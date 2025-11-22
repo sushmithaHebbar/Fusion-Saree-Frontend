@@ -162,7 +162,7 @@ const UploadArea = ({ title, placeholder, image, setter, clear, openModalCroped,
                     )}
                 </>
             ) : (
-                <p className="mb-0 fw-medium" style={{ color: 'var(--text-secondary)' }}>
+                <p className="mb-0 fw-medium upload-placeholder ">
                     {placeholder}
                 </p>
             )}
@@ -344,13 +344,13 @@ export const UploadView = ({ startGeneration, palluImage, setPalluImage, bodyIma
   
       return (
             <div className="align-desktop d-flex d-xl-flex flex-column pb-5">
-                  <h1 className="design-workspace text-center fw-bold mb-4 border-bottom pb-2">Design Workspace</h1>
-                  <div className=" card upload-section-card rounded-3 border-2 shadow-4 p-3 d-flex flex-column gap-4" style={{ backgroundColor: 'var(--card-bg)' }}>
+                  <h1 className="design-workspace text-center fw-bold mb-4 border-bottom pb-2 text-white">Design Workspace</h1>
+                  <div className=" card upload-section-card rounded-3 border-2 shadow-4 p-3 d-flex flex-column gap-4 " style={{ backgroundColor: 'var(--card-bg)' }}>
                       
-                        <div className='row g-3'>
-                              <div className="col-12 col-lg-4">
+                        <div className='row g-3 '>
+                              <div className="col-12 col-lg-4 ">
                                     <UploadArea 
-                                          title="Upload Pallu Image"  
+                                          title="Upload Pallu Image "  
                                           placeholder="Drop Pallu Image Here"  
                                           image={croppedPallu || palluImage}  
                                           setter={setPalluImage}  
