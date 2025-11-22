@@ -33,7 +33,7 @@ export const FullScreenModal = ({ imageUrl, close }) => (
 
 
 export const ResultView = ({ generatedImageUrl, startpage, croppedImages, openFullScreenView , 
-    palluId, setPalluId,borderId, setBorderId,bodyId, setBodyId,templeteId,setTempleteId,designNo,setDesignNo ,description
+    palluId, setPalluId,borderId, setBorderId,bodyId, setBodyId,templeteId,setTempleteId,designNo,setDesignNo ,description , userid
  }) => {
     const [isLoading , setIsLoading] =  useState(true)
     const [generateImage , setGeneratedImage] = useState(null)
@@ -58,7 +58,7 @@ export const ResultView = ({ generatedImageUrl, startpage, croppedImages, openFu
             formData.append('pallu_id',palluId);
             formData.append('body_id', bodyId);
             formData.append('prompt', description || "");
-
+            formData.append('id' , userid.id)
             console.log("1. Starting Main Generation...");
             const response = await fetch(`${base_url}/generate-saree`, {
                 method: 'POST',
@@ -81,7 +81,7 @@ export const ResultView = ({ generatedImageUrl, startpage, croppedImages, openFu
             }
             return null;
         } catch (e) {
-            console.error("Main generation failed", e);
+            alert("Main generation failed", e);
             setIsLoading(false);
             return null;
         }
@@ -95,6 +95,7 @@ export const ResultView = ({ generatedImageUrl, startpage, croppedImages, openFu
             console.log(`Generating variant for ID: ${sareeId} | DesignNo: ${currentDesignNo}`);
             
             const formData = new FormData();
+            formData.append('id' , userid.id)
             formData.append('prompt',`Generate variant ${designNo}` ); // Use the ID passed from step 1
            
             // Add other fields if your API needs them for variations
@@ -111,7 +112,7 @@ export const ResultView = ({ generatedImageUrl, startpage, croppedImages, openFu
                 setVariantImage(base64Image);
             }
         } catch (e) {
-            console.error("Variant generation failed", e);
+            alert("Variant generation failed", e);
         }
     };
 

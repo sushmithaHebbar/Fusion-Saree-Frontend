@@ -188,14 +188,14 @@ const App = () => {
     const [theme, setTheme] = useState('light');
     
 
-    const [user, setUser] = useState(() => {
+    const [id, setUser] = useState(() => {
     // Check local storage for a user (simulating persistent login)
-    return localStorage.getItem('sareeFusionUser') ? { name: localStorage.getItem('sareeFusionUser') } : null;
+    return localStorage.getItem('id') ? { id: localStorage.getItem('id') } : null;
 });
 
 // A function to handle successful login (called from Login component)
     const handleLoginSuccess = (name) => {
-    localStorage.setItem('sareeFusionUser', name);
+    localStorage.setItem('id', name);
     setUser({ name });
     };
 
@@ -295,10 +295,10 @@ const App = () => {
     return (
         <BrowserRouter>
             <Routes>
-               <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
+               <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess}  />} />
                 {/* Parent Route: Layout */}
                 <Route element={
-                    <ProtectedRoute user={user} redirectPath="/login">
+                    <ProtectedRoute user={id} redirectPath="/login">
                     <Layout 
                         togglemenu={togglemenu} 
                         isopenmenu={isopenmenu} 
@@ -340,6 +340,7 @@ const App = () => {
                             setDesignNo = {setDesignNo}
                             // Important: Pass setter for result
                             setGeneratedImageUrl={setGeneratedImageUrl}
+                            userid ={id}
                         />
                     } />
 
@@ -359,6 +360,7 @@ const App = () => {
                             designNo={designNo}
                             setDesignNo = {setDesignNo}
                             description = {description}
+                            userid = {id}
                         />
                     } />
                 </Route>
@@ -373,7 +375,8 @@ const UploadWrapper = (props) => {
     const navigate = useNavigate();
 
     const startGeneration = async () => {
-        const { palluImage, bodyImage, borderImage, description, croppedPallu, croppedBody, croppedBorder , palluId , borderId , bodyId , templeteId , designNo , setDesignNo } = props;
+        const { palluImage, bodyImage, borderImage, description, croppedPallu, croppedBody, croppedBorder , palluId , borderId , 
+            bodyId , templeteId , designNo , setDesignNo , userid} = props;
 
         // Validation
         if(!(palluId || borderId || bodyId) && !description){
@@ -389,6 +392,7 @@ const UploadWrapper = (props) => {
         formData.append('pallu_id' , palluId)
         formData.append('body_id' , bodyId)
         formData.append('prompt' , description)
+        formData.append('id' , userid)
         console.log("Simulating API request:", formData);
 
         // Mock Result

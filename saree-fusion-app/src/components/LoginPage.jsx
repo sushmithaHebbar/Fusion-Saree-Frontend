@@ -4,27 +4,57 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import './LoginPage.css'; 
 import sareeImageSource from '../assets/womenimage.png' // Ensure you have an image in this path
+import Spinner from 'react-bootstrap/esm/Spinner';
 
 export const Login = ({onLoginSuccess}) => {
   const [name, setName] = useState('');
   const navigate = useNavigate(); // Initialize the hook
-
+  const [isLoading , setIsLoading] = useState(false)
   const handleLogin = (e) => {
     e.preventDefault(); 
-    if (name.trim()) {
-      // 1. Log the action
-      console.log(`User "${name}" is attempting to log in.`);
-      onLoginSuccess(name.trim());
-      // 2. Simulate authentication success (optional alert, then navigate)
-      // alert(`Welcome, ${name}! Redirecting to home page...`); // You can remove this alert
-      
-      // 3. Navigate to the Home page ('/')
-      // This is the key change to make the button go to the home route.
-      navigate('/'); 
+    setIsLoading(true)
+    const base_url = import.meta.env.VITE_API_URL
+    
+    const get_user = async () => {
+      try {const form = new FormData()
+    form.append("username", name)
+          const response = await fetch(`${base_url}/get_user`, {
+              method: "POST",
+              body: form
+          });
+          if (response.status === 406) {
+            alert("User not found");
+            return; // Stop the function here
+        }
 
-    } else {
-      alert('Please enter your name to proceed.');
-    }
+        // 2. Check for other errors (404, 500, etc.)
+        if (!response.ok) {
+          
+            alert(`An error occurred: ${response.status}`);
+            return;
+        }
+          // 1. Convert the raw response into a JSON object
+          const data = await response.json();
+  
+          // 2. Access the _id field
+          const userId = data._id;
+          
+          console.log("User ID:", userId); // Output: 6920a8daf91e056be69a8b39
+          onLoginSuccess(userId)
+          setIsLoading(false)
+          navigate('/'); 
+  
+      } catch (error) {
+          console.alert("Error:", error);
+          setIsLoading(false)
+      }
+      finally{
+        setIsLoading(false)
+      }
+  }
+get_user()
+
+  
   };
 
   return (
@@ -57,8 +87,14 @@ export const Login = ({onLoginSuccess}) => {
               />
             </div>
             <button type="submit" className="login-button">
-              Login
-            </button>
+  {/* 1. Added quotes around "Login" */}
+  {/* 2. Added size="sm" to make the spinner fit inside the button */}
+  {isLoading ? (
+    <Spinner animation="border" size="sm" role="status" aria-hidden="true" />
+  ) : (
+    "Login"
+  )}
+</button>
           </form>
         </div>
       </div>

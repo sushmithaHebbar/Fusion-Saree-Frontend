@@ -9,7 +9,7 @@ const CheckIcon = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" 
 const ArrowRightIcon = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="12 4 19 12 12 20"/><line x1="19" x2="5" y1="12" y2="12"/></svg>;
 
 
-const UploadArea = ({ title, placeholder, image, setter, clear, openModalCroped, isCropped  , part , setId }) => {
+const UploadArea = ({ title, placeholder, image, setter, clear, openModalCroped, isCropped  , part , setId , userid }) => {
         const fileInputRef = useRef(null);
         const [isLoading , setIsLoading] = useState(false)
         const base_url = import.meta.env.VITE_API_URL
@@ -19,7 +19,8 @@ const UploadArea = ({ title, placeholder, image, setter, clear, openModalCroped,
               //Dont Touch this 
               const formData = new FormData();
               formData.append('image', file);
-          
+      
+              formData.append('id' , userid.id)
               try {
                   const response = await fetch(`${base_url}/upload_${part}`, {
                       method: 'POST',
@@ -52,7 +53,7 @@ const UploadArea = ({ title, placeholder, image, setter, clear, openModalCroped,
               localStorage.setItem(`${part}Id`, data.data)
               setIsLoading(false)
             } catch (error) {
-                console.error("Upload failed:", error);
+                alert("Upload failed:", error);
                 //Alert Give 
                 setIsLoading(false)
                 alert("Error "+ error)
@@ -317,7 +318,7 @@ const UploadArea = ({ title, placeholder, image, setter, clear, openModalCroped,
 
 
 export const UploadView = ({ startGeneration, palluImage, setPalluImage, bodyImage, setBodyImage, borderImage, setBorderImage, description, setDescription, croppedPallu, croppedBody, croppedBorder, isCropModalOpen, imageTypeToCrop, closeCropModal, openModalCroped, setCroppedPallu,
-     setCroppedBody, setCroppedBorder , palluId , borderId,bodyId ,setBodyId ,setBorderId,setPalluId  , navigate }) => {
+     setCroppedBody, setCroppedBorder , palluId , borderId,bodyId ,setBodyId ,setBorderId,setPalluId, userid  , navigate }) => {
   
       const imageStateMap = {
           pallu: { image: palluImage, setter: setPalluImage, croppedSetter: setCroppedPallu, isCropped: !!croppedPallu },
@@ -359,7 +360,7 @@ export const UploadView = ({ startGeneration, palluImage, setPalluImage, bodyIma
                                           isCropped={!!croppedPallu}
                                           part='pallu'
                                           setId = {setPalluId}
-                                        
+                                        userid ={userid}
                                     />
                               </div>
 
@@ -374,6 +375,7 @@ export const UploadView = ({ startGeneration, palluImage, setPalluImage, bodyIma
                                           isCropped={!!croppedBody}
                                           part='body'
                                           setId = {setBodyId}
+                                          userid ={userid}
                                     />
                               </div>
                           
@@ -388,6 +390,7 @@ export const UploadView = ({ startGeneration, palluImage, setPalluImage, bodyIma
                                           isCropped={!!croppedBorder}
                                           part='border'
                                           setId = {setBorderId}
+                                          userid ={userid}
                                     />
                               </div>
                         </div>
